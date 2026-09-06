@@ -32,3 +32,20 @@ Result: exit code 0 with no TypeScript errors.
 ## Concerns
 
 - Yarn reported pre-existing peer-dependency notices and a deprecation notice for transitive `glob@9.3.5` during installation; neither blocked the requested focused TypeScript verification.
+
+## Fix round 1: TypeScript 6 alias compatibility
+
+### What changed
+
+- Removed `baseUrl` and the disallowed `ignoreDeprecations` compiler-option suppression.
+- Kept the `@/*` alias and changed its TypeScript target to the TypeScript-6-compatible relative path `./src/*`.
+
+### Covering command and output
+
+The command was run while a temporary, uncommitted TypeScript fixture imported `@/constants/screenName` and asserted `screenName.title` has the literal type `'FieldOS'`:
+
+```bash
+COREPACK_HOME=/private/tmp/fieldos-corepack yarn tsc --noEmit
+```
+
+Output: no stdout or stderr; exit code 0.
