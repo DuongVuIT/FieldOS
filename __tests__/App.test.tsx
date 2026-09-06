@@ -7,7 +7,14 @@ import ReactTestRenderer from 'react-test-renderer';
 import App from '../App';
 
 test('renders correctly', async () => {
+  let renderer: ReactTestRenderer.ReactTestRenderer;
+
   await ReactTestRenderer.act(() => {
-    ReactTestRenderer.create(<App />);
+    renderer = ReactTestRenderer.create(<App />);
   });
+
+  expect(renderer!.root.findByProps({children: 'FieldOS'})).toBeTruthy();
+  expect(
+    renderer!.root.findByProps({children: 'Mobile Engineering Lab'}),
+  ).toBeTruthy();
 });
